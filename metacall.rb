@@ -1,6 +1,3 @@
-# Documentation: https://docs.brew.sh/Formula-Cookbook
-#                https://rubydoc.brew.sh/Formula
-# PLEASE REMOVE ALL GENERATED COMMENTS BEFORE SUBMITTING YOUR PULL REQUEST!
 class Metacall < Formula
   desc "MetaCall: The ultimate polyglot programming experience"
   homepage "https://metacall.io/"
@@ -8,7 +5,6 @@ class Metacall < Formula
   url "https://github.com/metacall/core/archive/refs/tags/v#{version}.zip"
   head "https://github.com/metacall/core", branch: "master"
   license "Apache-2.0"
-  # checksum for 0.5.24
   sha256 "04d9f1758dab409e1b1aeb279f78dca2b3b02fb1f59d8574d2457eee04b16f3e"
 
   depends_on "cmake" => :build
@@ -18,10 +14,6 @@ class Metacall < Formula
 
   
   def install
-    # ENV.deparallelize  # if your formula fails when building in parallel
-    # Remove unrecognized options if warned by configure
-    # https://rubydoc.brew.sh/Formula.html#std_configure_args-instance_method
-    # system "./configure", *std_configure_args, "--disable-silent-rules"
     system "mkdir build"
     Dir.chdir("build")
     args = std_cmake_args + %W[ 
@@ -52,15 +44,6 @@ class Metacall < Formula
   end
 
   test do
-    # `test do` will create, run in and delete a temporary directory.
-    #
-    # This test will fail and we won't accept that! For Homebrew/homebrew-core
-    # this will need to be a test that verifies the functionality of the
-    # software. Run the test with `brew test metacall`. Options passed
-    # to `brew install` such as `--HEAD` also need to be provided to `brew test`.
-    #
-    # The installed folder is not in the path, so use the entire path to any
-    # executables being tested: `system "#{bin}/program", "do", "something"`.
     system "false"
   end
 end
