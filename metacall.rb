@@ -61,6 +61,13 @@ class Metacall < Formula
     #
     # The installed folder is not in the path, so use the entire path to any
     # executables being tested: `system "#{bin}/program", "do", "something"`.
-    system "false"
+    # Creating tests files
+    system "echo", "-n", "console.log('Hello from NodeJS') >> testJS.js"
+    system "echo", "-n", "print('Hello from Python) >> testPy.py"
+    system "echo", "-n", "print('Hello from Ruby) >> testRuby.rb"
+    # Tests
+    system "/usr/local/Cellar/metacall/#{version}/metacallcli.app/Contents/MacOS/metacallcli", "testJS.js"
+    system "/usr/local/Cellar/metacall/#{version}/metacallcli.app/Contents/MacOS/metacallcli", "testPy.py"
+    system "/usr/local/Cellar/metacall/#{version}/metacallcli.app/Contents/MacOS/metacallcli", "testRuby.rb"
   end
 end
