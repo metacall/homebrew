@@ -1,17 +1,17 @@
 class Metacall < Formula
-  homepage "https://metacall.io/"
   desc "Ultimate polyglot programming experience"
+  homepage "https://metacall.io/"
   url "https://github.com/metacall/core/archive/refs/tags/v#{version}.tar.gz"
   version "0.5.24"
-  head "https://github.com/metacall/core", branch: "master"
-  license "Apache-2.0"
   # checksum for 0.5.24
   sha256 "04d9f1758dab409e1b1aeb279f78dca2b3b02fb1f59d8574d2457eee04b16f3e"
+  license "Apache-2.0"
+  head "https://github.com/metacall/core", branch: "master"
 
   depends_on "cmake" => :build
+  depends_on "node@14"
   depends_on "openjdk"
   depends_on "python@3.9"
-  depends_on "node@14"
   depends_on "ruby@3.1" 
 
   
@@ -42,7 +42,7 @@ class Metacall < Formula
       -DOPTION_BUILD_PORTS_NODE=OFF
     ]
     system "cmake", *args, ".."
-    system "cmake", "--build", "." , "--target", "install"
+    system "cmake", "--build", ".", "--target", "install"
 
     shebang = "\#!/usr/bin/env bash\n"
 
@@ -64,7 +64,7 @@ class Metacall < Formula
     rescue IOError => e
       system "false" # fails/raise exception
     ensure
-      file.close unless file.nil?
+      file&.close
     end
     chmod("u+x", "metacall.sh")
     bin.install "metacall.sh" => "metacall"
