@@ -11,6 +11,7 @@ sudo rm -rf "/usr/local/share/doc/node"
 sudo rm -rf "/usr/local/share/man/man1/node.1"
 sudo rm -rf "/usr/local/share/systemtap/tapset/node.stp"
 # INSTALL latest brew
+echo "Installing brew in order to build MetaCall"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 # uninstall npm/node/npm globally
 brew uninstall npm
