@@ -75,10 +75,11 @@ class Metacall < Formula
     (testpath/"test.js").write("console.log(\"Hello from NodeJS\")\n")
     (testpath/"test.py").write("print(\"Hello from Python\")\n")
     (testpath/"test.rb").write("print(\"Hello from Ruby\")\n")
-
+    (testpath/"test.java").write('public class HelloWorld{public static void main(String[]args){System.err.println("Hello from Java!");System.out.println("Hello from Java!");System.out.println("Hello from Java!");System.out.println("Hello from Java!");}}')
     # Tests
-    assert_equal "Script (test.py) loaded correctly\nHello from Python\n", shell_output("#{bin}/metacall test.py")#
-    assert_equal "Script (test.rb) loaded correctly\nHello from Ruby", shell_output("#{bin}/metacall test.rb")#
-    assert_equal "Script (test.js) loaded correctly\nHello from NodeJS\n", shell_output("#{bin}/metacall test.js")#
+    assert_equal "Script (test.py) loaded correctly\nHello from Python\n", shell_output("#{bin}/metacall test.py")
+    assert_equal "Script (test.rb) loaded correctly\nHello from Ruby", shell_output("#{bin}/metacall test.rb")
+    assert_equal "Script (test.java) loaded correctly\n", shell_output("#{bin}/metacall test.java")
+    assert_equal "Script (test.js) loaded correctly\nHello from NodeJS\n", shell_output("#{bin}/metacall test.js")
   end
 end
