@@ -1,0 +1,21 @@
+name: MacOSX BigSur brew build
+on: [push]
+jobs:
+  checkout-repo:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout upstream metacall.rb brew install
+        uses: actions/checkout@v3
+      - run: |
+         chmod +x ./build.sh
+  brew-build:
+    name: building metacall with brew
+    needs: build-action
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, macos-12]
+    steps:
+      - run: | 
+         ./build.sh
+
