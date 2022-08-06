@@ -26,6 +26,6 @@ brew install ./metacall.rb --build-from-source -dv
 echo "Installing MetaCall with brew"
 # Fixing linking brew step
 # See: https://github.com/Homebrew/brew/issues/1742
-brew install ./metacall.rb --build-from-source -dv || brew link --overwrite ./metacall.rb
+brew install ./metacall.rb --build-from-source -v || brew link --overwrite ./metacall.rb
 echo "Testing MetaCall"
 ./test.sh
