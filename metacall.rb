@@ -1,10 +1,10 @@
 class Metacall < Formula
   desc "Ultimate polyglot programming experience"
   homepage "https://metacall.io/"
-  url "https://github.com/metacall/core/archive/refs/tags/v#{version}.tar.gz"
   version "0.5.24"
+  url "https://github.com/metacall/core/archive/refs/tags/v#{version}.tar.gz"
   # checksum for 0.5.24
-  sha256 "04d9f1758dab409e1b1aeb279f78dca2b3b02fb1f59d8574d2457eee04b16f3e"
+  sha256 "a029fcaa847e4ea1359227d0cc97577971b1f59a421ec10faa83881e655f2a8d"
   license "Apache-2.0"
   head "https://github.com/metacall/core", branch: "master"
 
@@ -45,17 +45,18 @@ class Metacall < Formula
     system "cmake", "--build", ".", "--target", "install"
 
     shebang = "\#!/usr/bin/env bash\n"
+    debug = "set -euxo pipefail\n"
 
-    metacall_extra = %W[
-      LOC=/usr/local/Cellar/metacall/#{version}\n
-      LOADER_LIBRARY="$LOC/lib"\n
-      SERIAL_LIBRARY_PATH="$LOC/lib"\n
-      DETOUR_LIBRARY_PATH="$LOC/lib"\n
-      PORT_LIBRARY_PATH="$LOC/lib"\n
-      CONFIGURATION_PATH=$LOC/configurations/global.json\n
+    metacall_extra = [
+      "LOC=/usr/local/Cellar/metacall/#{version}\n",
+      "export LOADER_LIBRARY=\"$LOC/lib\"\n",
+      "export SERIAL_LIBRARY_PATH=\"$LOC/lib\"\n",
+      "export DETOUR_LIBRARY_PATH=\"$LOC/lib\"\n",
+      "export PORT_LIBRARY_PATH=\"$LOC/lib\"\n",
+      "export CONFIGURATION_PATH=\"$LOC/configurations/global.json\"\n"
     ]
     cmds = [shebang, *metacall_extra]
-    cmds.append("[[ -n $LOADER_SCRIPT_PATH ]] && LOADER_SCRIPT_PATH=\"$CWD\"\n")
+    cmds.append("export LOADER_SCRIPT_PATH=\"\${LOADER_SCRIPT_PATH:-\`pwd\`}\"\n")
     cmds.append("$LOC/metacallcli.app/Contents/MacOS/metacallcli $@\n")
 
     begin 
@@ -71,12 +72,13 @@ class Metacall < Formula
   end
 
   test do
-    system "echo", "-n", "console.log('Hello from NodeJS') >> testJS.js"
-    system "echo", "-n", "print('Hello from Python) >> testPy.py"
-    system "echo", "-n", "print('Hello from Ruby) >> testRuby.rb"
+    (testpath/"test.js").write("console.log(\"Hello from NodeJS\")\n")
+    (testpath/"test.py").write("print(\"Hello from Python\")\n")
+    (testpath/"test.rb").write("print(\"Hello from Ruby\")\n")
+
     # Tests
-    system "/usr/local/Cellar/metacall/#{version}/metacallcli.app/Contents/MacOS/metacallcli", "testJS.js", "|", "grep -i 'Hello from NodeJS'"
-    system "/usr/local/Cellar/metacall/#{version}/metacallcli.app/Contents/MacOS/metacallcli", "testPy.py", "|", "grep -i 'Hello from Python'"
-    system "/usr/local/Cellar/metacall/#{version}/metacallcli.app/Contents/MacOS/metacallcli", "testRuby.rb", "|", "grep -i 'Hello from Ruby'"
+    assert_equal "Script (test.py) loaded correctly\nHello from Python\n", shell_output("#{bin}/metacall test.py")#
+    assert_equal "Script (test.rb) loaded correctly\nHello from Ruby", shell_output("#{bin}/metacall test.rb")#
+    assert_equal "Script (test.js) loaded correctly\nHello from NodeJS\n", shell_output("#{bin}/metacall test.js")#
   end
 end
