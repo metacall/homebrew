@@ -69,17 +69,20 @@ class Metacall < Formula
 
   test do
     (testpath/"test.js").write("console.log(\"Hello from NodeJS\")\n")
-    (testpath/"test.ts").write("console.log(\"Hello from TypeScript\")\n")
+    # TypeScript special test
+    Dir.mkdir(testpath/"typescript")
+    (testpath/"typescript/typedfunc.ts").write("'use strict';export function typed_sum(left:number,right:number):number{return left+right}export async function typed_sum_async(left:number,right:number):Promise<number>{return left+right}export function build_name(first:string,last='Smith'){return`${first} ${last}`}export function object_pattern_ts({asd}){return asd}export function typed_array(a:number[]):number{return a[0]+a[1]+a[2]}export function object_record(a:Record<string, number>):number{return a.element}")
+
     (testpath/"test.py").write("print(\"Hello from Python\")\n")
     (testpath/"test.rb").write("print(\"Hello from Ruby\")\n")
     (testpath/"test.java").write('public class HelloWorld{public static void main(String[]args)' \
                                  '{System.err.println("Hello from Java!");System.out.println("Hello from Java!");' \
                                  'System.out.println("Hello from Java!");System.out.println("Hello from Java!");}}')
     # Tests
-    assert_equal "Script (test.py) loaded correctly\nHello from Python\n", shell_output("#{bin}/metacall test.py")
-    assert_equal "Script (test.rb) loaded correctly\nHello from Ruby", shell_output("#{bin}/metacall test.rb")
-    assert_equal "Script (test.java) loaded correctly\n", shell_output("#{bin}/metacall test.java")
-    assert_equal "Hello from NodeJS\nScript (test.js) loaded correctly\n", shell_output("#{bin}/metacall test.js")
-    assert_equal "Hello from TypeScript\nScript (test.ts) loaded correctly\n", shell_output("#{bin}/metacall test.ts")
+    assert_match "Hello from Python", shell_output("#{bin}/metacall test.py")
+    assert_match "Hello from Ruby", shell_output("#{bin}/metacall test.rb")
+    assert_match "Script (test.java) loaded correctly\n", shell_output("#{bin}/metacall test.java")
+    assert_match "Hello from NodeJS", shell_output("#{bin}/metacall test.js")
+    assert_match "9.0", shell_output("cd typescript && echo 'load ts typedfunc.ts\ninspect\ncall typed_sum(4, 5)\nexit' | #{bin}/metacall")
   end
 end
