@@ -22,4 +22,7 @@ sudo rm -rf /usr/local/include/node
 sudo rm -rf /usr/local/lib/node
 # Build metacall brew
 brew install ./metacall.rb --build-from-source -dv
+echo "Installing MetaCall with brew"
+brew install ./metacall.rb --build-from-source -dv
+echo "Testing MetaCall"
 ./test.sh
