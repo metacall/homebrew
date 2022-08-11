@@ -14,9 +14,9 @@ sudo rm -rf "/usr/local/share/systemtap/tapset/node.stp"
 echo "Installing brew in order to build MetaCall"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 # uninstall npm/node/npm globally
-brew uninstall npm
-brew uninstall node
-brew uninstall npm -g 
+brew uninstall npm || echo "npm not installed"
+brew uninstall node || echo "node not installed"
+brew uninstall npm -g || echo "npm globally not installed"
 # Remove all files related to node
 sudo rm -rf /usr/local/lib/node_modules
 sudo rm -rf /usr/local/include/node
