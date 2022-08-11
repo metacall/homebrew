@@ -1,8 +1,8 @@
 class Metacall < Formula
   desc "Ultimate polyglot programming experience"
   homepage "https://metacall.io/"
-  version "0.5.24"
-  url "https://github.com/metacall/core/archive/refs/tags/v#{version}.tar.gz"
+  version "0.5.26"
+  url "https://github.com/AkechiShiro/core/archive/refs/heads/metacall-app-bundle-remove.tar.gz"
   # checksum for 0.5.24
   sha256 "a029fcaa847e4ea1359227d0cc97577971b1f59a421ec10faa83881e655f2a8d"
   license "Apache-2.0"
