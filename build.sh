@@ -17,10 +17,12 @@ echo "Installing brew in order to build MetaCall"
 brew uninstall npm || echo "npm not installed"
 brew uninstall node || echo "node not installed"
 brew uninstall npm -g || echo "npm globally not installed"
+brew unlink node@16 || echo "brew node@16 probably not installed"
 # Remove all files related to node
 sudo rm -rf /usr/local/lib/node_modules
 sudo rm -rf /usr/local/include/node
 sudo rm -rf /usr/local/lib/node
+sudo rm -rf /usr/local/bin/corepack
 # Build metacall brew
 brew install ./metacall.rb --build-from-source -dv
 echo "Installing MetaCall with brew"
