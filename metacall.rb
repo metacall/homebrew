@@ -2,7 +2,6 @@ class Metacall < Formula
   desc "Ultimate polyglot programming experience"
   homepage "https://metacall.io"
   url "https://github.com/metacall/core/archive/refs/tags/v0.5.27.tar.gz"
-  version "0.5.27"
   sha256 "1493afadac893b7b3674ea44dd7caa7fd74989880658ae23003b30d3721bb92d"
   license "Apache-2.0"
   head "https://github.com/metacall/core.git", branch: "develop"
@@ -85,7 +84,10 @@ class Metacall < Formula
       cd typescript
       echo 'load ts typedfunc.ts\ninspect\ncall typed_sum(4, 5)\nexit' | #{bin}/metacall
     EOS
+<<<<<<< HEAD
     chmod("u+x", testpath/"testTypescript.sh")
+=======
+>>>>>>> 6515abf (Fix almost all brew audit warnings)
     (testpath/"test.py").write <<~EOS
       print("Hello from Python")
     EOS
