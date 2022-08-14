@@ -85,6 +85,7 @@ class Metacall < Formula
       cd typescript
       echo 'load ts typedfunc.ts\ninspect\ncall typed_sum(4, 5)\nexit' | #{bin}/metacall
     EOS
+    chmod("u+x", testpath/"testTypescript.sh")
     (testpath/"test.py").write <<~EOS
       print("Hello from Python")
     EOS
