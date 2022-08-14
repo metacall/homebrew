@@ -1,5 +1,7 @@
 name: MacOSX BigSur brew build
-on: [push]
+on:
+  release:
+    types: [published]
 jobs:
   checkout-repo:
     runs-on: ${{ matrix.os }}
