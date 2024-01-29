@@ -62,6 +62,8 @@ class Metacall < Formula
 
     chmod("u+x", "metacall.sh")
     bin.install "metacall.sh" => "metacall"
+
+    system "cmake", "--build", ".", "--target", "clean"
   end
 
   test do
