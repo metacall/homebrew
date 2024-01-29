@@ -1,20 +1,39 @@
 class Metacall < Formula
   desc "Ultimate polyglot programming experience"
   homepage "https://metacall.io"
-  url "https://github.com/metacall/core/archive/refs/tags/v0.5.27.tar.gz"
-  sha256 "1493afadac893b7b3674ea44dd7caa7fd74989880658ae23003b30d3721bb92d"
+  url "https://github.com/metacall/core/archive/refs/tags/v0.7.5.tar.gz"
+  sha256 "2780ee0aade125866d7cb9f48d39a34a891e0dba30c31a8efbbc0da55968a313"
   license "Apache-2.0"
   head "https://github.com/metacall/core.git", branch: "develop"
 
   depends_on "cmake" => :build
   depends_on "node@14"
   depends_on "openjdk"
-  depends_on "python@3.9"
+  depends_on "python@3.12"
   uses_from_macos "ruby"
+
+  def python
+    deps.map(&:to_formula)
+        .find { |f| f.name.match?(/^python@\d\.\d+$/) }
+  end
+
+  # Get Python location
+  def python_executable
+    python.opt_libexec/"bin/python"
+  end
 
   def install
     Dir.mkdir("build")
     Dir.chdir("build")
+    py3ver = Language::Python.major_minor_version python_executable
+    py3prefix = if OS.mac?
+      python.opt_frameworks/"Python.framework/Versions"/py3ver
+    else
+      python.opt_prefix
+    end
+    py3include = py3prefix/"include/python#{py3ver}"
+    py3rootdir = py3prefix
+    py3lib = py3prefix/"lib/libpython#{py3ver}.dylib"
     args = std_cmake_args + %W[
       -Wno-dev
       -DCMAKE_BUILD_TYPE=Release
@@ -37,6 +56,11 @@ class Metacall < Formula
       -DOPTION_BUILD_PORTS=ON
       -DOPTION_BUILD_PORTS_PY=ON
       -DOPTION_BUILD_PORTS_NODE=ON
+      -DPython3_VERSION=#{py3ver}
+      -DPython3_ROOT_DIR=#{py3rootdir}
+      -DPython3_EXECUTABLE=#{python_executable}
+      -DPython3_LIBRARIES=#{py3lib}
+      -DPython3_INCLUDE_DIRS=#{py3include}
     ]
     system "cmake", *args, ".."
     system "cmake", "--build", ".", "--target", "install"
