@@ -60,7 +60,7 @@ class Metacall < Formula
       -DPython3_ROOT_DIR=#{py3rootdir}
       -DPython3_EXECUTABLE=#{python_executable}
       -DPython3_LIBRARIES=#{py3lib}
-      -DPython3_INCLUDE_DIRS=#{py3include}
+      -DPython3_INCLUDE_DIR=#{py3include}
     ]
     system "cmake", *args, ".."
     system "cmake", "--build", ".", "--target", "install"
