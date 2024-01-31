@@ -8,8 +8,4 @@ if [[ $(command -v brew) == "" ]]; then
 fi
 
 # Build metacall brew
-HOMEBREW_NO_AUTO_UPDATE=1 brew install ./metacall.rb --build-from-source -dv
-
-# Fixing linking brew step
-# See: https://github.com/Homebrew/brew/issues/1742
-brew install ./metacall.rb --build-from-source -v || brew link --overwrite ./metacall.rb
+HOMEBREW_NO_AUTO_UPDATE=1 brew install ./metacall.rb --build-from-source --overwrite -v
