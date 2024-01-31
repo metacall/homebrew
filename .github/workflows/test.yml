@@ -17,30 +17,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Clean up existing dependencies for avoiding conflicts
-        run: |
-          # Remove all local files related to npm/node to avoid conflict
-          sudo rm -rf /usr/local/bin/node
-          sudo rm -rf /usr/local/bin/npm
-          sudo rm -rf /usr/local/bin/npx
-          sudo rm -rf /usr/local/include/node
-          sudo rm -rf /usr/local/lib/dtrace/node.d
-          sudo rm -rf /usr/local/lib/node_modules/npm
-          sudo rm -rf /usr/local/share/doc/node
-          sudo rm -rf /usr/local/share/man/man1/node.1
-          sudo rm -rf /usr/local/share/systemtap/tapset/node.stp
-
-          # Uninstall npm and node globally
-          brew uninstall npm
-          brew uninstall node
-          brew unlink node@16
-
-          # Remove all files related to node
-          sudo rm -rf /usr/local/lib/node_modules
-          sudo rm -rf /usr/local/include/node
-          sudo rm -rf /usr/local/lib/node
-          sudo rm -rf /usr/local/bin/corepack
-
       - name: Build
         run: ./build.sh
 
