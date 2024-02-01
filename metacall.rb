@@ -10,7 +10,7 @@ class Metacall < Formula
   depends_on "node@14"
   depends_on "openjdk"
   depends_on "python@3.12"
-  uses_from_macos "ruby"
+  depends_on "ruby"
 
   def python
     deps.map(&:to_formula)
@@ -50,7 +50,7 @@ class Metacall < Formula
       -DOPTION_BUILD_LOADERS_C=OFF
       -DOPTION_BUILD_LOADERS_COB=OFF
       -DOPTION_BUILD_LOADERS_CS=OFF
-      -DOPTION_BUILD_LOADERS_RB=OFF
+      -DOPTION_BUILD_LOADERS_RB=ON
       -DOPTION_BUILD_LOADERS_TS=ON
       -DOPTION_BUILD_LOADERS_FILE=ON
       -DOPTION_BUILD_PORTS=ON
