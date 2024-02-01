@@ -2,7 +2,7 @@ class Metacall < Formula
   desc "Ultimate polyglot programming experience"
   homepage "https://metacall.io"
   url "https://github.com/metacall/core/archive/refs/tags/v0.7.7.tar.gz"
-  sha256 "e453db3a17912569fa2e93e36566724adb34ddae"
+  sha256 "28a0e198c3d7583280191ebc94d9377d96b89b6df2cd3e4a233921696a483853"
   license "Apache-2.0"
   head "https://github.com/metacall/core.git", branch: "develop"
 
@@ -42,20 +42,21 @@ class Metacall < Formula
       -DOPTION_BUILD_SCRIPTS=OFF
       -DOPTION_BUILD_TESTS=OFF
       -DOPTION_BUILD_EXAMPLES=OFF
-      -DOPTION_BUILD_LOADERS_PY=ON
-      -DOPTION_BUILD_LOADERS_NODE=ON
+      -DOPTION_BUILD_LOADERS_PY=OFF
+      -DOPTION_BUILD_LOADERS_NODE=OFF
       -DNodeJS_INSTALL_PREFIX=/usr/local/Cellar/metacall/#{version}
-      -DOPTION_BUILD_LOADERS_JAVA=ON
+      -DOPTION_BUILD_LOADERS_JAVA=OFF
       -DOPTION_BUILD_LOADERS_JS=OFF
       -DOPTION_BUILD_LOADERS_C=OFF
       -DOPTION_BUILD_LOADERS_COB=OFF
       -DOPTION_BUILD_LOADERS_CS=OFF
-      -DOPTION_BUILD_LOADERS_RB=ON
-      -DOPTION_BUILD_LOADERS_TS=ON
-      -DOPTION_BUILD_LOADERS_FILE=ON
-      -DOPTION_BUILD_PORTS=ON
-      -DOPTION_BUILD_PORTS_PY=ON
-      -DOPTION_BUILD_PORTS_NODE=ON
+      -DOPTION_BUILD_LOADERS_RB=OFF
+      -DOPTION_BUILD_LOADERS_TS=OFF
+      -DOPTION_BUILD_LOADERS_FILE=OFF
+      -DOPTION_BUILD_PORTS=OFF
+      -DOPTION_BUILD_PORTS_PY=OFF
+      -DOPTION_BUILD_PORTS_NODE=OFF
+      -DOPTION_BUILD_PLUGINS_BACKTRACE=ON
       -DPython3_VERSION=#{py3ver}
       -DPython3_ROOT_DIR=#{py3rootdir}
       -DPython3_EXECUTABLE=#{python_executable}
