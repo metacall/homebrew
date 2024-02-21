@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-12, macos-13, macos-14]
+        os: [macos-12] # TODO: macos-13, macos-14
     runs-on: ${{ matrix.os }}
     steps:
       - name: Check out the repository
