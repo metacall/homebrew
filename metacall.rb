@@ -1,13 +1,13 @@
 class Metacall < Formula
   desc "Ultimate polyglot programming experience"
   homepage "https://metacall.io"
-  url "https://github.com/metacall/core/archive/refs/tags/v0.7.9.tar.gz"
-  sha256 "f252ee9d272e2471879db99aca5e37dac742e917fc0da490b087934c78f5e3e4"
+  url "https://github.com/metacall/core/archive/refs/tags/v0.7.10.tar.gz"
+  sha256 "238666dcbf6fc4c042724c86180698fb5df2ea59db0c01213854c66be05cf6e4"
   license "Apache-2.0"
   head "https://github.com/metacall/core.git", branch: "develop"
 
   depends_on "cmake" => :build
-  depends_on "node@14"
+  depends_on "node@18"
   depends_on "openjdk"
   depends_on "python@3.12"
   depends_on "ruby"
