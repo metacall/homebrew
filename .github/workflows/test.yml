@@ -22,11 +22,11 @@ jobs:
       - name: Clean
         run: |
           # Uninstall NodeJS
-          brew uninstall --force node
+          brew uninstall --force --ignore-dependencies node
           brew unlink node
           sudo rm -rf /usr/local/{lib/node{,/.npm,_modules},bin,include,share/man}/{npm*,node*,corepack*,man1/node*}
           # Uninstall Python
-          brew uninstall --force python
+          brew uninstall --force --ignore-dependencies python
           brew unlink python
           sudo rm -rf /usr/local/bin/python3*
           # Clean brew
