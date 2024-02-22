@@ -120,7 +120,7 @@ class Metacall < Formula
     (testpath/"test_typescript.sh").write <<~EOS
       #!/usr/bin/env bash
       cd typescript
-      echo 'load ts typedfunc.ts\ninspect\ncall typed_sum(4, 5)\nexit' | #{bin}/metacall
+      echo 'load ts typedfunc.ts\ninspect\ncall typed_sum(4321, 50000)\nexit' | #{bin}/metacall
     EOS
     chmod("u+x", testpath/"test_typescript.sh")
     (testpath/"test.py").write <<~EOS
@@ -141,7 +141,7 @@ class Metacall < Formula
     assert_match "Hello from Python", shell_output("#{bin}/metacall test.py")
     assert_match "Hello from Ruby", shell_output("#{bin}/metacall test.rb")
     assert_match "Hello from NodeJS", shell_output("#{bin}/metacall test.js")
-    assert_match "9.0", shell_output(testpath/"test_typescript.sh")
+    assert_match "54321", shell_output(testpath/"test_typescript.sh")
 
     # TODO
     # assert_match "Hello from Java", shell_output("#{bin}/metacall test.java")
