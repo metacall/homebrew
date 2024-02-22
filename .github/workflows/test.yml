@@ -36,10 +36,7 @@ jobs:
 
       # Build Homebrew recipe
       - name: Build
-        run: |
-          ./build.sh
-          # Remove build files
-          find /private/tmp/ -type d -name "metacall*" -exec rm -rf {} \;
+        run:  ./build.sh
 
       # Test Homebrew recipe
       - name: Test
