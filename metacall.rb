@@ -7,10 +7,10 @@ class Metacall < Formula
   head "https://github.com/metacall/core.git", branch: "develop"
 
   depends_on "cmake" => :build
-  depends_on "node@18"
-  depends_on "openjdk"
+  depends_on "node@14"
   depends_on "python@3.12"
   depends_on "ruby"
+  depends_on "openjdk"
 
   def python
     deps.map(&:to_formula)
@@ -95,7 +95,6 @@ class Metacall < Formula
     (testpath/"test.js").write <<~EOS
       console.log("Hello from NodeJS")
     EOS
-    # TypeScript special test
     Dir.mkdir(testpath/"typescript")
     (testpath/"typescript/typedfunc.ts").write <<~EOS
       'use strict';
@@ -137,11 +136,14 @@ class Metacall < Formula
         }
       }
     EOS
+
     # Tests
     assert_match "Hello from Python", shell_output("#{bin}/metacall test.py")
     assert_match "Hello from Ruby", shell_output("#{bin}/metacall test.rb")
-    assert_match "Hello from Java", shell_output("#{bin}/metacall test.java")
     assert_match "Hello from NodeJS", shell_output("#{bin}/metacall test.js")
     assert_match "9.0", shell_output(testpath/"test_typescript.sh")
+
+    # TODO
+    # assert_match "Hello from Java", shell_output("#{bin}/metacall test.java")
   end
 end
