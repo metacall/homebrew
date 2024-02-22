@@ -23,14 +23,15 @@ jobs:
         run: |
           # Uninstall NodeJS
           brew uninstall --force --ignore-dependencies node
-          brew unlink node
-          sudo rm -rf /usr/local/{lib/node{,/.npm,_modules},bin,include,share/man}/{npm*,node*,corepack*,man1/node*}
+          brew cleanup -s node
+          brew cleanup --prune-prefix
+          # sudo rm -rf /usr/local/{lib/node{,/.npm,_modules},bin,include,share/man}/{npm*,node*,corepack*,man1/node*}
           # Uninstall Python
           brew uninstall --force --ignore-dependencies python
           brew unlink python
-          sudo rm -rf /usr/local/bin/python3*
-          # Clean brew
-          brew cleanup
+          brew cleanup -s python
+          brew cleanup --prune-prefix
+          # sudo rm -rf /usr/local/bin/python3*
 
       # Build Homebrew recipe
       - name: Build
