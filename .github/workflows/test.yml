@@ -28,7 +28,6 @@ jobs:
           # sudo rm -rf /usr/local/{lib/node{,/.npm,_modules},bin,include,share/man}/{npm*,node*,corepack*,man1/node*}
           # Uninstall Python
           brew uninstall --force --ignore-dependencies python
-          brew unlink python
           brew cleanup -s python
           brew cleanup --prune-prefix
           # sudo rm -rf /usr/local/bin/python3*
