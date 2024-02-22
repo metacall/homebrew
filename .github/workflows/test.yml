@@ -18,8 +18,27 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Build
-        run: ./build.sh
+      # Clean up previous dependencies in order to avoid conflicts with brew
+      - name: Clean
+        run: |
+          # Uninstall NodeJS
+          brew uninstall --force node
+          brew unlink node
+          sudo rm -rf /usr/local/{lib/node{,/.npm,_modules},bin,include,share/man}/{npm*,node*,corepack*,man1/node*}
+          # Uninstall Python
+          brew uninstall --force python
+          brew unlink python
+          sudo rm -rf /usr/local/bin/python3*
+          # Clean brew
+          brew cleanup
 
+      # Build Homebrew recipe
+      - name: Build
+        run: |
+          ./build.sh
+          # Remove build files
+          find /private/tmp/ -type d -name "metacall*" -exec rm -rf {} \;
+
+      # Test Homebrew recipe
       - name: Test
         run: ./test.sh
