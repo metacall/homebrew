@@ -30,6 +30,8 @@ jobs:
           brew uninstall --force --ignore-dependencies python@3.11
           brew cleanup -s python@3.11
           brew cleanup --prune-prefix
+          sudo -rf /System/Library/Frameworks/Python.framework/
+          brew prune
           brew uninstall --force --ignore-dependencies ruby
           brew cleanup -s ruby
           brew cleanup --prune-prefix
