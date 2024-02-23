@@ -21,15 +21,12 @@ jobs:
       # Clean up previous dependencies in order to avoid conflicts with brew
       - name: Clean
         run: |
-          # Uninstall NodeJS
           brew uninstall --force --ignore-dependencies node
           brew cleanup -s node
           brew cleanup --prune-prefix
-          # Uninstall Python
           brew uninstall --force --ignore-dependencies python
           brew cleanup -s python
           brew cleanup --prune-prefix
-          # Uninstall Ruby
           brew uninstall --force --ignore-dependencies ruby
           brew cleanup -s ruby
           brew cleanup --prune-prefix
