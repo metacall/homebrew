@@ -79,7 +79,7 @@ class Metacall < Formula
     ]
     cmds = [shebang, *metacall_extra]
     cmds.append("export LOADER_SCRIPT_PATH=\"\${LOADER_SCRIPT_PATH:-\`pwd\`}\"\n")
-    cmds.append("${PREFIX}/bin/metacallcli $@\n")
+    cmds.append("${PREFIX}/metacallcli $@\n")
 
     File.open("metacall.sh", "w") do |f|
       f.write(*cmds)
