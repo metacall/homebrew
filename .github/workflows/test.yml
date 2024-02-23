@@ -27,6 +27,7 @@ jobs:
           brew uninstall --force --ignore-dependencies python
           brew cleanup -s python
           brew cleanup --prune-prefix
+          sudo rm -rf /usr/local/bin/2to3
           brew uninstall --force --ignore-dependencies ruby
           brew cleanup -s ruby
           brew cleanup --prune-prefix
