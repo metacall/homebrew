@@ -70,16 +70,16 @@ class Metacall < Formula
     # debug = "set -euxo pipefail\n"
 
     metacall_extra = [
-      "LOC=/usr/local/Cellar/metacall/#{version}\n",
-      "export LOADER_LIBRARY=\"$LOC/lib\"\n",
-      "export SERIAL_LIBRARY_PATH=\"$LOC/lib\"\n",
-      "export DETOUR_LIBRARY_PATH=\"$LOC/lib\"\n",
-      "export PORT_LIBRARY_PATH=\"$LOC/lib\"\n",
-      "export CONFIGURATION_PATH=\"$LOC/configurations/global.json\"\n",
+      "PREFIX=/usr/local/Cellar/metacall/#{version}\n",
+      "export LOADER_LIBRARY=\"${PREFIX}/lib\"\n",
+      "export SERIAL_LIBRARY_PATH=\"${PREFIX}/lib\"\n",
+      "export DETOUR_LIBRARY_PATH=\"${PREFIX}/lib\"\n",
+      "export PORT_LIBRARY_PATH=\"${PREFIX}/lib\"\n",
+      "export CONFIGURATION_PATH=\"${PREFIX}/configurations/global.json\"\n",
     ]
     cmds = [shebang, *metacall_extra]
     cmds.append("export LOADER_SCRIPT_PATH=\"\${LOADER_SCRIPT_PATH:-\`pwd\`}\"\n")
-    cmds.append("$LOC/metacallcli $@\n")
+    cmds.append("${PREFIX}/bin/metacallcli $@\n")
 
     File.open("metacall.sh", "w") do |f|
       f.write(*cmds)
@@ -88,6 +88,7 @@ class Metacall < Formula
     chmod("u+x", "metacall.sh")
     bin.install "metacall.sh" => "metacall"
 
+    # Clean build data
     system "cmake", "--build", ".", "--target", "clean"
   end
 
