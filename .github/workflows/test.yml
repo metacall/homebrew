@@ -30,6 +30,7 @@ jobs:
           brew uninstall --force --ignore-dependencies ruby
           brew cleanup -s ruby
           brew cleanup --prune-prefix
+          sudo rm -rf $(brew --repo homebrew/core)
 
       # Build Homebrew recipe
       - name: Build
