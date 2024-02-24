@@ -10,3 +10,6 @@ fi
 # Build metacall brew recipe
 export HOMEBREW_NO_AUTO_UPDATE=1
 brew install ./metacall.rb --build-from-source --overwrite -v
+
+# Build distributable binary using brew pkg
+brew pkg metacall
