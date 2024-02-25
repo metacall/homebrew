@@ -9,7 +9,7 @@ fi
 
 # Build metacall brew recipe
 export HOMEBREW_NO_AUTO_UPDATE=1
-brew install --build-from-source --overwrite -v metacall.rb
+brew install --build-from-source --overwrite --force -v metacall.rb
 
 # Build distributable binary using brew pkg
 brew tap timsutton/formulae
