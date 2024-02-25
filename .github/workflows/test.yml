@@ -41,11 +41,12 @@ jobs:
       - name: Build
         run:  ./build.sh
 
+      # Save distributable as Artifact
       - name: Save Distributable
         uses: actions/upload-artifact@v2
         with:
           name: metacall
-          path: metacall.pkg
+          path: metacall-(.*).pkg
           retention-days: 1
 
       # Test Homebrew recipe
