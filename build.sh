@@ -8,8 +8,9 @@ if [[ $(command -v brew) == "" ]]; then
 fi
 
 # Build metacall brew recipe
+rm /usr/local/bin/2to3 || true
 export HOMEBREW_NO_AUTO_UPDATE=1
-brew install --build-from-source --overwrite --force -v metacall.rb
+brew install --build-from-source --overwrite -v metacall.rb
 
 # Build distributable binary using brew pkg
 brew tap timsutton/formulae
