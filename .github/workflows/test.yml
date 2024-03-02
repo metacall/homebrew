@@ -52,6 +52,15 @@ jobs:
           brew cleanup --prune-prefix
           sudo rm -rf $(brew --repo homebrew/core)
 
+      # Save distributable as Artifact
+      - name: Save Distributable
+        uses: actions/upload-artifact@v2
+        with:
+          name: metacall
+          path: pkg/*.pkg
+          retention-days: 1
+          if-no-files-found: error
+          
       # Build Homebrew recipe
       - name: Build
         run:  ./build.sh
