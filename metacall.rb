@@ -12,10 +12,6 @@ class Metacall < Formula
   depends_on "ruby@2.7"
   depends_on "openjdk"
 
-  def brew_prefix
-    `brew --cellar`
-  end
-
   def python
     deps.map(&:to_formula)
         .find { |f| f.name.match?(/^python@\d\.\d+$/) }
@@ -48,7 +44,7 @@ class Metacall < Formula
       -DOPTION_BUILD_EXAMPLES=OFF
       -DOPTION_BUILD_LOADERS_PY=ON
       -DOPTION_BUILD_LOADERS_NODE=ON
-      -DNodeJS_INSTALL_PREFIX=#{brew_prefix}/metacall/#{version}
+      -DNodeJS_INSTALL_PREFIX=#{prefix}/metacall/#{version}
       -DOPTION_BUILD_LOADERS_JAVA=ON
       -DOPTION_BUILD_LOADERS_JS=OFF
       -DOPTION_BUILD_LOADERS_C=OFF
@@ -74,7 +70,7 @@ class Metacall < Formula
     # debug = "set -euxo pipefail\n"
 
     metacall_extra = [
-      "PREFIX=#{brew_prefix}/metacall/#{version}\n",
+      "PREFIX=#{prefix}/metacall/#{version}\n",
       "export LOADER_LIBRARY=\"${PREFIX}/lib\"\n",
       "export SERIAL_LIBRARY_PATH=\"${PREFIX}/lib\"\n",
       "export DETOUR_LIBRARY_PATH=\"${PREFIX}/lib\"\n",
