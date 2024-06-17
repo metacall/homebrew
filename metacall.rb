@@ -9,7 +9,7 @@ class Metacall < Formula
   depends_on "cmake" => :build
   depends_on "node@20"
   depends_on "python@3.12"
-  depends_on "ruby@2.7"
+  depends_on "ruby@3.3"
   depends_on "openjdk"
 
   def python
@@ -34,8 +34,18 @@ class Metacall < Formula
     py3include = py3prefix/"include/python#{py3ver}"
     py3rootdir = py3prefix
     py3lib = py3prefix/"lib/libpython#{py3ver}.dylib"
+
+    cc_compiler = `xcrun --find clang`.tr("\n","")
+    cxx_compiler = `xcrun --find clang++`.tr("\n","")
+    xcode_prefix = `xcode-select -p`.tr("\n","")
+    ENV["SDKROOT"] = `xcrun --show-sdk-path`.tr("\n","")
+    ENV["MACOSX_DEPLOYMENT_TARGET"] = ""
+
     args = std_cmake_args + %W[
       -Wno-dev
+      -DCMAKE_C_COMPILER=#{cc_compiler}
+      -DCMAKE_CXX_COMPILER=#{cxx_compiler}
+      -DCMAKE_INCLUDE_PATH=#{xcode_prefix}/usr/include/c++/v1
       -DCMAKE_BUILD_TYPE=Release
       -DOPTION_BUILD_SECURITY=OFF
       -DOPTION_FORK_SAFE=OFF
@@ -44,25 +54,26 @@ class Metacall < Formula
       -DOPTION_BUILD_EXAMPLES=OFF
       -DOPTION_BUILD_LOADERS_PY=ON
       -DOPTION_BUILD_LOADERS_NODE=ON
-      -DNodeJS_INSTALL_PREFIX=#{prefix}
-      -DOPTION_BUILD_LOADERS_JAVA=ON
+      -DNodeJS_INSTALL_PREFIX=/usr/local/Cellar/metacall/#{version}
+      -DOPTION_BUILD_LOADERS_JAVA=OFF
       -DOPTION_BUILD_LOADERS_JS=OFF
       -DOPTION_BUILD_LOADERS_C=OFF
       -DOPTION_BUILD_LOADERS_COB=OFF
       -DOPTION_BUILD_LOADERS_CS=OFF
-      -DOPTION_BUILD_LOADERS_RB=ON
-      -DOPTION_BUILD_LOADERS_TS=ON
-      -DOPTION_BUILD_LOADERS_FILE=ON
+      -DOPTION_BUILD_LOADERS_RB=OFF
+      -DOPTION_BUILD_LOADERS_TS=OFF
+      -DOPTION_BUILD_LOADERS_FILE=OFF
       -DOPTION_BUILD_PORTS=ON
       -DOPTION_BUILD_PORTS_PY=ON
       -DOPTION_BUILD_PORTS_NODE=ON
-      -DOPTION_BUILD_PLUGINS_BACKTRACE=ON
+      -DOPTION_BUILD_PLUGINS_BACKTRACE=OFF
       -DPython3_VERSION=#{py3ver}
       -DPython3_ROOT_DIR=#{py3rootdir}
       -DPython3_EXECUTABLE=#{python_executable}
       -DPython3_LIBRARIES=#{py3lib}
       -DPython3_INCLUDE_DIR=#{py3include}
     ]
+
     system "cmake", *args, ".."
     system "cmake", "--build", ".", "--target", "install"
 
@@ -70,7 +81,7 @@ class Metacall < Formula
     # debug = "set -euxo pipefail\n"
 
     metacall_extra = [
-      "PREFIX=#{prefix}\n",
+      "PREFIX=/usr/local/Cellar/metacall/#{version}\n",
       "export LOADER_LIBRARY=\"${PREFIX}/lib\"\n",
       "export SERIAL_LIBRARY_PATH=\"${PREFIX}/lib\"\n",
       "export DETOUR_LIBRARY_PATH=\"${PREFIX}/lib\"\n",
