@@ -9,7 +9,7 @@ class Metacall < Formula
   depends_on "cmake" => :build
   depends_on "node@20"
   depends_on "python@3.12"
-  depends_on "ruby@2.7"
+  depends_on "ruby@3.3"
   depends_on "openjdk"
 
   def python
