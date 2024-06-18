@@ -81,7 +81,7 @@ class Metacall < Formula
     # debug = "set -euxo pipefail\n"
 
     metacall_extra = [
-      "PREFIX=/usr/local/Cellar/metacall/#{version}\n",
+      "PREFIX=#{prefix}\n",
       "export LOADER_LIBRARY=\"${PREFIX}/lib\"\n",
       "export SERIAL_LIBRARY_PATH=\"${PREFIX}/lib\"\n",
       "export DETOUR_LIBRARY_PATH=\"${PREFIX}/lib\"\n",
