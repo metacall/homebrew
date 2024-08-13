@@ -44,6 +44,23 @@ class Metacall < Formula
     python.opt_libexec/"bin/python"
   end
 
+  def install_dependencies
+    # Get all dependencies that are not build dependencies
+    runtime_deps = deps.reject(&:build?)
+
+    # Install only the runtime dependencies
+    runtime_deps.each do |dep|
+      if dep.installed?
+        opoo "#{dep} is already installed"
+        next
+      end
+
+      if !dep.optional? && !dep.recommended?
+        dep.to_formula.brew.install
+      end
+    end
+  end
+
   def install
     # Build path
     build_dir = buildpath/"build"
