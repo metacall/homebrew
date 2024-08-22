@@ -82,6 +82,7 @@ class Metacall < Formula
       -DOPTION_BUILD_EXAMPLES=OFF
       -DOPTION_BUILD_LOADERS_PY=ON
       -DOPTION_BUILD_LOADERS_NODE=ON
+      -DNodeJS_CMAKE_DEBUG=ON
       -DNodeJS_LIBRARY=#{build_dir}/libnode.127.dylib
       -DNodeJS_EXECUTABLE=#{build_dir}/node
       -DNodeJS_INSTALL_PREFIX=/usr/local/Cellar/metacall/#{version}
