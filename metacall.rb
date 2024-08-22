@@ -1,14 +1,12 @@
 class Metacall < Formula
   desc "Ultimate polyglot programming experience"
   homepage "https://metacall.io"
-  url "https://github.com/metacall/core/archive/refs/tags/v0.7.11.tar.gz"
-  sha256 "08cfdddac1e6e0fb845cf4c9c4eb7d1f1f5d762ef7812a5f85163b5a5db568ce"
+  url "https://github.com/metacall/core/archive/refs/tags/v0.8.1.tar.gz"
+  sha256 "d1146041ef5933e13dc5f15e2cfd895ca3452b77a679d05e692273c50fc7974f"
   license "Apache-2.0"
   head "https://github.com/metacall/core.git", branch: "develop"
 
   depends_on "cmake" => :build
-  # TODO: Enable NodeJS
-  # depends_on "node@20"
   depends_on "python@3.12"
   depends_on "ruby@3.3"
   # TODO: Enable Java
@@ -61,6 +59,7 @@ class Metacall < Formula
       build_dir.install resource("node")
     end
 
+    # Add build folder to PATH in order to find node executable
     ENV.prepend_path "PATH", build_dir
 
     # Set the compiler
