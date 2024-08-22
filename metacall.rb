@@ -61,6 +61,8 @@ class Metacall < Formula
       build_dir.install resource("node")
     end
 
+    ENV.prepend_path "PATH", build_dir
+
     # Set the compiler
     cc_compiler = `xcrun --find clang`.tr("\n","")
     cxx_compiler = `xcrun --find clang++`.tr("\n","")
