@@ -40,8 +40,10 @@ class Metacall < Formula
   end
 
   def install
-    Dir.mkdir("build")
-    Dir.chdir("build")
+    # Build path
+    build_dir = buildpath/"build"
+    Dir.mkdir(build_dir)
+    Dir.chdir(build_dir)
 
     # Set Python
     py3ver = Language::Python.major_minor_version python_executable
@@ -56,17 +58,8 @@ class Metacall < Formula
 
     # Set NodeJS
     resource("node").stage do
-      (buildpath/"build").install resource("node")
+      build_dir.install resource("node")
     end
-
-    system "echo", "TEST ------------------------------"
-    system "echo", "TEST ------------------------------"
-    system "pwd"
-    system "ls -la"
-    system "ls -la build"
-    system "echo", "TEST ------------------------------"
-    system "echo", "TEST ------------------------------"
-
 
     # Set the compiler
     cc_compiler = `xcrun --find clang`.tr("\n","")
@@ -87,11 +80,11 @@ class Metacall < Formula
       -DOPTION_BUILD_TESTS=OFF
       -DOPTION_BUILD_EXAMPLES=OFF
       -DOPTION_BUILD_LOADERS_PY=ON
-      # TODO: Enable NodeJS
       -DOPTION_BUILD_LOADERS_NODE=ON
-      # -DNodeJS_INSTALL_PREFIX=/usr/local/Cellar/metacall/#{version}
-      # TODO: Enable Java
-      # -DOPTION_BUILD_LOADERS_JAVA=ON
+      -DNodeJS_LIBRARY=#{build_dir}/libnode.127.dylib
+      -DNodeJS_EXECUTABLE=#{build_dir}/node
+      -DNodeJS_INSTALL_PREFIX=/usr/local/Cellar/metacall/#{version}
+      -DOPTION_BUILD_LOADERS_JAVA=OFF
       -DOPTION_BUILD_LOADERS_JS=OFF
       -DOPTION_BUILD_LOADERS_C=OFF
       -DOPTION_BUILD_LOADERS_COB=OFF
