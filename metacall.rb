@@ -7,10 +7,27 @@ class Metacall < Formula
   head "https://github.com/metacall/core.git", branch: "develop"
 
   depends_on "cmake" => :build
-  depends_on "node@20"
+  # TODO: Enable NodeJS
+  # depends_on "node@20"
   depends_on "python@3.12"
   depends_on "ruby@3.3"
-  depends_on "openjdk"
+  # TODO: Enable Java
+  # depends_on "openjdk"
+
+  # Define NodeJS resource
+  if OS.mac? && Hardware::CPU.intel?
+    resource "node" do
+      url "https://github.com/metacall/libnode/releases/download/v22.6.0/libnode-amd64-macos.tar.xz"
+      sha256 "aa62ed6bb5b85c57fc58850540c66953302982bda46300056705035400d65967"
+    end
+  end
+
+  if OS.mac? && Hardware::CPU.arm?
+    resource "node" do
+      url "https://github.com/metacall/libnode/releases/download/v22.6.0/libnode-arm64-macos.tar.xz"
+      sha256 "26c661e9a8e553614e719644f05bb46ffa397e85b658aa9853257f65f8ea9270"
+    end
+  end
 
   def python
     deps.map(&:to_formula)
@@ -25,6 +42,8 @@ class Metacall < Formula
   def install
     Dir.mkdir("build")
     Dir.chdir("build")
+
+    # Set Python
     py3ver = Language::Python.major_minor_version python_executable
     py3prefix = if OS.mac?
       python.opt_frameworks/"Python.framework/Versions"/py3ver
@@ -35,6 +54,21 @@ class Metacall < Formula
     py3rootdir = py3prefix
     py3lib = py3prefix/"lib/libpython#{py3ver}.dylib"
 
+    # Set NodeJS
+    resource("node").stage do
+      (buildpath/"build").install resource("node")
+    end
+
+    system "echo", "TEST ------------------------------"
+    system "echo", "TEST ------------------------------"
+    system "pwd"
+    system "ls -la"
+    system "ls -la build"
+    system "echo", "TEST ------------------------------"
+    system "echo", "TEST ------------------------------"
+
+
+    # Set the compiler
     cc_compiler = `xcrun --find clang`.tr("\n","")
     cxx_compiler = `xcrun --find clang++`.tr("\n","")
     xcode_prefix = `xcode-select -p`.tr("\n","")
@@ -53,9 +87,11 @@ class Metacall < Formula
       -DOPTION_BUILD_TESTS=OFF
       -DOPTION_BUILD_EXAMPLES=OFF
       -DOPTION_BUILD_LOADERS_PY=ON
+      # TODO: Enable NodeJS
       -DOPTION_BUILD_LOADERS_NODE=ON
-      -DNodeJS_INSTALL_PREFIX=/usr/local/Cellar/metacall/#{version}
-      -DOPTION_BUILD_LOADERS_JAVA=OFF
+      # -DNodeJS_INSTALL_PREFIX=/usr/local/Cellar/metacall/#{version}
+      # TODO: Enable Java
+      # -DOPTION_BUILD_LOADERS_JAVA=ON
       -DOPTION_BUILD_LOADERS_JS=OFF
       -DOPTION_BUILD_LOADERS_C=OFF
       -DOPTION_BUILD_LOADERS_COB=OFF
@@ -155,7 +191,7 @@ class Metacall < Formula
     assert_match "Hello from NodeJS", shell_output("#{bin}/metacall test.js")
     assert_match "54321", shell_output(testpath/"test_typescript.sh")
 
-    # TODO
+    # TODO: Enable Java
     # assert_match "Hello from Java", shell_output("#{bin}/metacall test.java")
   end
 end
