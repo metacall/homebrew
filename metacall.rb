@@ -1,8 +1,8 @@
 class Metacall < Formula
   desc "Ultimate polyglot programming experience"
   homepage "https://metacall.io"
-  url "https://github.com/metacall/core/archive/refs/tags/v0.8.1.tar.gz"
-  sha256 "d1146041ef5933e13dc5f15e2cfd895ca3452b77a679d05e692273c50fc7974f"
+  url "https://github.com/metacall/core/archive/refs/tags/v0.8.2.tar.gz"
+  sha256 "da5914891c3943ad4400d1269a437b666299c3309b3f3a8a2af80baa64d1d5b5"
   license "Apache-2.0"
   head "https://github.com/metacall/core.git", branch: "develop"
 
@@ -87,7 +87,6 @@ class Metacall < Formula
       -DNodeJS_CMAKE_DEBUG=ON
       -DNodeJS_LIBRARY=#{lib}/libnode.127.dylib
       -DNodeJS_EXECUTABLE=#{bin}/node
-      -DNodeJS_INSTALL_PREFIX=/usr/local/Cellar/metacall/#{version}
       -DOPTION_BUILD_LOADERS_JAVA=OFF
       -DOPTION_BUILD_LOADERS_JS=OFF
       -DOPTION_BUILD_LOADERS_C=OFF
@@ -181,12 +180,6 @@ class Metacall < Formula
         }
       }
     EOS
-
-    system "echo", "------------------------ TEST ------------------------"
-    system "echo", bin
-    system "ls", "-la", bin
-    system "echo", lib
-    system "ls", "-la", lib
 
     # Tests
     assert_match "Hello from Python", shell_output("#{bin}/metacall test.py")
