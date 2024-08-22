@@ -57,10 +57,12 @@ class Metacall < Formula
     # Set NodeJS
     resource("node").stage do
       build_dir.install resource("node")
+      bin.install build_dir/"node"
+      lib.install build_dir/"libnode.127.dylib"
     end
 
     # Add build folder to PATH in order to find node executable
-    ENV.prepend_path "PATH", build_dir
+    # ENV.prepend_path "PATH", build_dir
 
     # Set the compiler
     cc_compiler = `xcrun --find clang`.tr("\n","")
@@ -83,8 +85,8 @@ class Metacall < Formula
       -DOPTION_BUILD_LOADERS_PY=ON
       -DOPTION_BUILD_LOADERS_NODE=ON
       -DNodeJS_CMAKE_DEBUG=ON
-      -DNodeJS_LIBRARY=#{build_dir}/libnode.127.dylib
-      -DNodeJS_EXECUTABLE=#{build_dir}/node
+      -DNodeJS_LIBRARY=#{lib}/libnode.127.dylib
+      -DNodeJS_EXECUTABLE=#{bin}/node
       -DNodeJS_INSTALL_PREFIX=/usr/local/Cellar/metacall/#{version}
       -DOPTION_BUILD_LOADERS_JAVA=OFF
       -DOPTION_BUILD_LOADERS_JS=OFF
