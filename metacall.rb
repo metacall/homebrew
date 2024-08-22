@@ -62,7 +62,7 @@ class Metacall < Formula
     end
 
     # Add build folder to PATH in order to find node executable
-    # ENV.prepend_path "PATH", build_dir
+    ENV.prepend_path "PATH", bin
 
     # Set the compiler
     cc_compiler = `xcrun --find clang`.tr("\n","")
@@ -181,6 +181,12 @@ class Metacall < Formula
         }
       }
     EOS
+
+    system "echo", "------------------------ TEST ------------------------"
+    system "echo", bin
+    system "ls", "-la", bin
+    system "echo", lib
+    system "ls", "-la", lib
 
     # Tests
     assert_match "Hello from Python", shell_output("#{bin}/metacall test.py")
