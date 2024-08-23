@@ -27,6 +27,13 @@ class Metacall < Formula
     end
   end
 
+  # We track major/minor from upstream Node releases.
+  # We will accept *important* npm patch releases when necessary.
+  resource "npm" do
+    url "https://registry.npmjs.org/npm/-/npm-10.8.2.tgz"
+    sha256 "c8c61ba0fa0ab3b5120efd5ba97fdaf0e0b495eef647a97c4413919eda0a878b"
+  end
+
   def python
     deps.map(&:to_formula)
         .find { |f| f.name.match?(/^python@\d\.\d+$/) }
@@ -63,6 +70,23 @@ class Metacall < Formula
 
     # Add build folder to PATH in order to find node executable
     ENV.prepend_path "PATH", bin
+
+    # Set NPM
+    bootstrap = buildpath/"npm_bootstrap"
+    bootstrap.install resource("npm")
+    # These dirs must exists before npm install.
+    mkdir_p libexec/"lib"
+    system "node", bootstrap/"bin/npm-cli.js", "install", "-ddd", "--global",
+            "--prefix=#{libexec}", resource("npm").cached_download
+
+    # The `package.json` stores integrity information about the above passed
+    # in `cached_download` npm resource, which breaks `npm -g outdated npm`.
+    # This copies back over the vanilla `package.json` to fix this issue.
+    cp bootstrap/"package.json", libexec/"lib/node_modules/npm"
+    # These symlinks are never used & they've caused issues in the past.
+    rm_r libexec/"share" if (libexec/"share").exist?
+
+    bash_completion.install bootstrap/"lib/utils/completion.sh" => "npm"
 
     # Set the compiler
     cc_compiler = `xcrun --find clang`.tr("\n","")
