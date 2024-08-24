@@ -146,6 +146,8 @@ class Metacall < Formula
       "PARENT=$(dirname \"${SCRIPT_DIR}\")\n",
       "if [ -f \"${PARENT}/metacallcli\" ]; then\n",
       "  PREFIX=\"${PARENT}\"\n",
+      "elif [ -f \"metacall-core/metacallcli\" ]; then",
+      "  PREFIX=\"metacall-core\"",
       "else\n",
       "  PREFIX=\"${PARENT}/Cellar/metacall/#{version}\"\n",
       "fi\n",
