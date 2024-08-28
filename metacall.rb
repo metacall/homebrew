@@ -147,7 +147,7 @@ class Metacall < Formula
       "if [ -f \"${PARENT}/metacall-core/metacallcli\" ]; then\n",
       "  PREFIX=\"${PARENT}/metacall-core\"\n",
       "else\n",
-      "  PREFIX=\"${PARENT}/../\"\n",
+      "  PREFIX=\"${PARENT}/Cellar/metacall/#{version}\"\n",
       "fi\n",
       "export LOADER_LIBRARY=\"${PREFIX}/lib\"\n",
       "export SERIAL_LIBRARY_PATH=\"${PREFIX}/lib\"\n",
