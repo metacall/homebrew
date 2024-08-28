@@ -142,14 +142,12 @@ class Metacall < Formula
     # debug = "set -euxo pipefail\n"
 
     metacall_extra = [
-      "SCRIPT_DIR=$(cd -- \"$(dirname -- \"${BASH_SOURCE[0]}\")\" &> /dev/null && pwd)\n",
+      "SCRIPT_DIR=$(cd \"$(dirname \"${BASH_SOURCE[0]}\")\" &> /dev/null && pwd)\n",
       "PARENT=$(dirname \"${SCRIPT_DIR}\")\n",
-      "if [ -f \"${PARENT}/metacallcli\" ]; then\n",
-      "  PREFIX=\"${PARENT}\"\n",
-      "elif [ -f \"metacall-core/metacallcli\" ]; then\n",
-      "  PREFIX=\"metacall-core\"\n",
+      "if [ -f \"${PARENT}/metacall-core/metacallcli\" ]; then\n",
+      "  PREFIX=\"${PARENT}/metacall-core\"\n",
       "else\n",
-      "  PREFIX=\"${PARENT}/Cellar/metacall/#{version}\"\n",
+      "  PREFIX=\"${PARENT}/../\"\n",
       "fi\n",
       "export LOADER_LIBRARY=\"${PREFIX}/lib\"\n",
       "export SERIAL_LIBRARY_PATH=\"${PREFIX}/lib\"\n",
