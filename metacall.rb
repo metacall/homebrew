@@ -144,7 +144,7 @@ class Metacall < Formula
     metacall_extra = [
       "SCRIPT_DIR=$(cd -- \"$(dirname -- \"${BASH_SOURCE[0]}\")\" &> /dev/null && pwd)\n",
       "PARENT=$(dirname \"${SCRIPT_DIR}\")\n",
-      "if [ -f \"${PARENT}/metacall-core/metacallcli\" ]; then\n",
+      "if [ -f \"${SCRIPT_DIR}/metacall-core/metacallcli\" ]; then\n",
       "  PREFIX=\"${SCRIPT_DIR}/metacall-core\"\n",
       "else\n",
       "  PREFIX=\"${PARENT}/Cellar/metacall/#{version}\"\n",
