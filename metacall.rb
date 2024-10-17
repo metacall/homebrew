@@ -138,7 +138,7 @@ class Metacall < Formula
     system "cmake", *args, ".."
     system "cmake", "--build", ".", "--target", "install"
 
-    shebang = "\#!/usr/bin/env bash\n"
+    shebang = "#!/usr/bin/env bash\n"
     # debug = "set -euxo pipefail\n"
 
     metacall_extra = [
