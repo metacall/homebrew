@@ -138,10 +138,8 @@ class Metacall < Formula
     system "cmake", *args, ".."
     system "cmake", "--build", ".", "--target", "install"
 
-    shebang = "#!/usr/bin/env bash\n"
-    # debug = "set -euxo pipefail\n"
-
-    metacall_extra = [
+    metacall_sh = [
+      "#!/usr/bin/env bash\n",
       "SCRIPT_DIR=$(cd -- \"$(dirname -- \"${BASH_SOURCE[0]}\")\" &> /dev/null && pwd)\n",
       "PARENT=$(dirname \"${SCRIPT_DIR}\")\n",
       "if [ -f \"${PARENT}/metacallcli\" ]; then\n",
@@ -154,13 +152,12 @@ class Metacall < Formula
       "export DETOUR_LIBRARY_PATH=\"${PREFIX}/lib\"\n",
       "export PORT_LIBRARY_PATH=\"${PREFIX}/lib\"\n",
       "export CONFIGURATION_PATH=\"${PREFIX}/configurations/global.json\"\n",
+      "export LOADER_SCRIPT_PATH=\"\${LOADER_SCRIPT_PATH:-\`pwd\`}\"\n",
+      "${PREFIX}/metacallcli $@\n"
     ]
-    cmds = [shebang, *metacall_extra]
-    cmds.append("export LOADER_SCRIPT_PATH=\"\${LOADER_SCRIPT_PATH:-\`pwd\`}\"\n")
-    cmds.append("${PREFIX}/metacallcli $@\n")
 
     File.open("metacall.sh", "w") do |f|
-      f.write(*cmds)
+      f.write(*metacall_sh)
     end
 
     chmod("u+x", "metacall.sh")
