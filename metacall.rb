@@ -1,8 +1,8 @@
 class Metacall < Formula
   desc "Ultimate polyglot programming experience"
   homepage "https://metacall.io"
-  url "https://github.com/metacall/core/archive/refs/tags/v0.8.4.tar.gz"
-  sha256 "d0b17369ac3419099e07402ef1c3f54cca796b61a778149eb16abbc71884f47c"
+  url "https://github.com/metacall/core/archive/refs/tags/v0.8.5.tar.gz"
+  sha256 "4401062f64e401ce7d8c71deb31a3bbe99fd50ea22eb7e8cdc2565ccadc78339"
   license "Apache-2.0"
   head "https://github.com/metacall/core.git", branch: "develop"
 
