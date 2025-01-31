@@ -60,6 +60,10 @@ class Metacall < Formula
     py3include = py3prefix/"include/python#{py3ver}"
     py3rootdir = py3prefix
     py3lib = py3prefix/"lib/libpython#{py3ver}.dylib"
+    py3pip = py3prefix/"lib/python#{py3ver}/site-packages"
+
+    # Add pip site packages folder to target so the build system can find it
+    ENV.prepend_path "PIP_TARGET", py3pip
 
     # Set NodeJS
     resource("node").stage do
