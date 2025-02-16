@@ -9,4 +9,4 @@ fi
 
 # Build metacall brew recipe
 export HOMEBREW_NO_AUTO_UPDATE=1
-brew install ./metacall.rb --build-from-source --overwrite -v
+brew install --formula ./metacall.rb --build-from-source --overwrite -v
