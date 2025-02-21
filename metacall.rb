@@ -198,8 +198,8 @@ class Metacall < Formula
       console.log("Hello from NodeJS")
     EOS
     (testpath/"test-port.js").write <<~EOS
-      require('metacall');
-      console.log("NodeJS Port");
+      const metacall = require('metacall');
+      console.log("NodeJS Port", metacall);
     EOS
     Dir.mkdir(testpath/"typescript")
     (testpath/"typescript/typedfunc.ts").write <<~EOS
@@ -233,7 +233,8 @@ class Metacall < Formula
       print("Hello from Python")
     EOS
     (testpath/"test-port.py").write <<~EOS
-      print("Python Port")
+      import metacall
+      print("Python Port", metacall)
     EOS
     (testpath/"test.rb").write <<~EOS
       print("Hello from Ruby")
