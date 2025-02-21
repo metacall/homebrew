@@ -151,6 +151,7 @@ class Metacall < Formula
       "else\n",
       "  PREFIX=\"${PARENT}/Cellar/metacall/#{version}\"\n",
       "fi\n",
+      "export NODE_PATH=#{HOMEBREW_PREFIX}/lib/node_modules\n",
       "export LOADER_LIBRARY=\"${PREFIX}/lib\"\n",
       "export SERIAL_LIBRARY_PATH=\"${PREFIX}/lib\"\n",
       "export DETOUR_LIBRARY_PATH=\"${PREFIX}/lib\"\n",
@@ -197,6 +198,7 @@ class Metacall < Formula
       console.log("Hello from NodeJS")
     EOS
     (testpath/"test-port.js").write <<~EOS
+      require('metacall');
       console.log("NodeJS Port");
     EOS
     Dir.mkdir(testpath/"typescript")
