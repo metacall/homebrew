@@ -151,6 +151,7 @@ class Metacall < Formula
       "else\n",
       "  PREFIX=\"${PARENT}/Cellar/metacall/#{version}\"\n",
       "fi\n",
+      "export NODE_PATH=#{HOMEBREW_PREFIX}/lib/node_modules\n",
       "export LOADER_LIBRARY=\"${PREFIX}/lib\"\n",
       "export SERIAL_LIBRARY_PATH=\"${PREFIX}/lib\"\n",
       "export DETOUR_LIBRARY_PATH=\"${PREFIX}/lib\"\n",
@@ -172,25 +173,25 @@ class Metacall < Formula
   end
 
   # # NPM Post Install
-  # def post_install
-  #   node_modules = HOMEBREW_PREFIX/"lib/node_modules"
-  #   node_modules.mkpath
-  #   # Kill npm but preserve all other modules across node updates/upgrades.
-  #   rm_r node_modules/"npm" if (node_modules/"npm").exist?
+  def post_install
+    node_modules = HOMEBREW_PREFIX/"lib/node_modules"
+    node_modules.mkpath
+    # Kill npm but preserve all other modules across node updates/upgrades.
+    rm_r node_modules/"npm" if (node_modules/"npm").exist?
 
-  #   cp_r libexec/"lib/node_modules/npm", node_modules
-  #   # This symlink doesn't hop into homebrew_prefix/bin automatically so
-  #   # we make our own. This is a small consequence of our
-  #   # bottle-npm-and-retain-a-private-copy-in-libexec setup
-  #   # All other installs **do** symlink to homebrew_prefix/bin correctly.
-  #   # We ln rather than cp this because doing so mimics npm's normal install.
-  #   ln_sf node_modules/"npm/bin/npm-cli.js", bin/"npm"
-  #   ln_sf node_modules/"npm/bin/npx-cli.js", bin/"npx"
-  #   ln_sf bin/"npm", HOMEBREW_PREFIX/"bin/npm"
-  #   ln_sf bin/"npx", HOMEBREW_PREFIX/"bin/npx"
+    cp_r libexec/"lib/node_modules/npm", node_modules
+    # This symlink doesn't hop into homebrew_prefix/bin automatically so
+    # we make our own. This is a small consequence of our
+    # bottle-npm-and-retain-a-private-copy-in-libexec setup
+    # All other installs **do** symlink to homebrew_prefix/bin correctly.
+    # We ln rather than cp this because doing so mimics npm's normal install.
+    ln_sf node_modules/"npm/bin/npm-cli.js", bin/"npm"
+    ln_sf node_modules/"npm/bin/npx-cli.js", bin/"npx"
+    ln_sf bin/"npm", HOMEBREW_PREFIX/"bin/npm"
+    ln_sf bin/"npx", HOMEBREW_PREFIX/"bin/npx"
 
-  #   (node_modules/"npm/npmrc").atomic_write("prefix = #{HOMEBREW_PREFIX}\n")
-  # end
+    (node_modules/"npm/npmrc").atomic_write("prefix = #{HOMEBREW_PREFIX}\n")
+  end
 
   test do
     (testpath/"test.js").write <<~EOS
