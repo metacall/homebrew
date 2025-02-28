@@ -7,11 +7,6 @@ if [[ $(command -v brew) == "" ]]; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-# Clean up previous installation
-brew uninstall --force metacall || true
-brew cleanup -s metacall
-brew cleanup --prune-prefix
-
 # Build metacall brew recipe
 export HOMEBREW_NO_AUTO_UPDATE=1
-brew install ./metacall.rb --build-from-source --overwrite -v
+brew install --formula ./metacall.rb --build-from-source --overwrite -v
