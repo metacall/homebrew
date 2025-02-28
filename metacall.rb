@@ -45,6 +45,12 @@ class Metacall < Formula
   end
 
   def install
+    # Create a directory for the Python module
+    py_module_dir = prefix/"lib/python"
+    mkdir_p py_module_dir
+    ENV["PIP_TARGET"] = py_module_dir.to_s
+    ENV.delete("PYTHONPATH")  # Clear PYTHONPATH to avoid conflicts
+  
     # Build path
     build_dir = buildpath/"build"
     Dir.mkdir(build_dir)
@@ -63,8 +69,7 @@ class Metacall < Formula
     py3pip = py3prefix/"lib/python#{py3ver}/site-packages"
 
     # Add pip site packages folder to target so the build system can find it
-    ENV.prepend_path "PIP_TARGET", py3pip
-
+  
     # Set NodeJS
     resource("node").stage do
       build_dir.install resource("node")
@@ -151,6 +156,7 @@ class Metacall < Formula
       "else\n",
       "  PREFIX=\"${PARENT}/Cellar/metacall/#{version}\"\n",
       "fi\n",
+      "export PYTHONPATH=\"${PREFIX}/lib/python:${PYTHONPATH:-}\"\n",
       "export NODE_PATH=#{HOMEBREW_PREFIX}/lib/node_modules\n",
       "export LOADER_LIBRARY=\"${PREFIX}/lib\"\n",
       "export SERIAL_LIBRARY_PATH=\"${PREFIX}/lib\"\n",
