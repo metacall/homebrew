@@ -1,7 +1,7 @@
 class Metacall < Formula
   desc "Ultimate polyglot programming experience"
   homepage "https://metacall.io"
-  url "https://github.com/metacall/core/archive/refs/tags/v0.9.0.tar.gz"
+  url "https://github.com/metacall/core/archive/refs/tags/v0.9.1.tar.gz"
   sha256 "3d7e8b86edd9c47e2b97bd1a1316955c7569a2810ca570b2ae669f354415f0d8"
   license "Apache-2.0"
   head "https://github.com/metacall/core.git", branch: "develop"
@@ -32,6 +32,12 @@ class Metacall < Formula
   resource "npm" do
     url "https://registry.npmjs.org/npm/-/npm-10.8.2.tgz"
     sha256 "c8c61ba0fa0ab3b5120efd5ba97fdaf0e0b495eef647a97c4413919eda0a878b"
+  end
+
+  # Define PLTHook resource
+  resource "plthook" do
+    url "https://github.com/metacall/plthook/archive/refs/tags/v0.1.0.tar.gz"
+    sha256 "1e09d262b7db65021510a308d1554b9d2420e9dcd15e47ffdebff5157a9723d8"
   end
 
   def python
@@ -101,6 +107,13 @@ class Metacall < Formula
     ln_sf libexec/"lib/node_modules/npm/bin/npm-cli.js", bin/"npm"
     ln_sf libexec/"lib/node_modules/npm/bin/npx-cli.js", bin/"npx"
 
+    # PLTHook
+    plthook_dir = nil
+
+    resource("plthook").stage do
+      plthook_dir = Pathname.pwd
+    end
+
     # Set the compiler
     cc_compiler = `xcrun --find clang`.tr("\n","")
     cxx_compiler = `xcrun --find clang++`.tr("\n","")
@@ -117,6 +130,7 @@ class Metacall < Formula
       -DOPTION_BUILD_SECURITY=OFF
       -DOPTION_BUILD_DETOURS=ON
       -DOPTION_BUILD_DETOURS_PLTHOOK=ON
+      -DPLTHook_SOURCE_DIR=#{plthook_dir}
       -DOPTION_FORK_SAFE=ON
       -DOPTION_BUILD_SCRIPTS=OFF
       -DOPTION_BUILD_TESTS=OFF
