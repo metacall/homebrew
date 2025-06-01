@@ -108,19 +108,10 @@ class Metacall < Formula
     ln_sf libexec/"lib/node_modules/npm/bin/npx-cli.js", bin/"npx"
 
     # PLTHook
-    plthook_dir = nil
+    plthook_dir = buildpath/"build/plthook"
 
     resource("plthook").stage do
-      plthook_dir = Pathname.pwd
-      system "echo", "------------------------------------------------------"
-      system "echo", "------------------------------------------------------"
-      system "echo", "------------------------------------------------------"
-      system "echo", "------------------------------------------------------"
-      system "echo", "------------------------------------------------------"
-      system "echo", "------------------------------------------------------"
-      system "echo", "------------------------------------------------------"
-      system "echo", "------------------------------------------------------"
-      system "ls", "-l", plthook_dir
+      plthook_dir.install "plthook.h", "plthook_osx.c"
     end
 
     # Set the compiler
