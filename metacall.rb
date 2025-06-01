@@ -1,8 +1,8 @@
 class Metacall < Formula
   desc "Ultimate polyglot programming experience"
   homepage "https://metacall.io"
-  url "https://github.com/metacall/core/archive/refs/tags/v0.8.5.tar.gz"
-  sha256 "4401062f64e401ce7d8c71deb31a3bbe99fd50ea22eb7e8cdc2565ccadc78339"
+  url "https://github.com/metacall/core/archive/refs/tags/v0.9.0.tar.gz"
+  sha256 "3d7e8b86edd9c47e2b97bd1a1316955c7569a2810ca570b2ae669f354415f0d8"
   license "Apache-2.0"
   head "https://github.com/metacall/core.git", branch: "develop"
 
@@ -115,7 +115,9 @@ class Metacall < Formula
       -DCMAKE_INCLUDE_PATH=#{xcode_prefix}/usr/include/c++/v1
       -DCMAKE_BUILD_TYPE=Release
       -DOPTION_BUILD_SECURITY=OFF
-      -DOPTION_FORK_SAFE=OFF
+      -DOPTION_BUILD_DETOURS=ON
+      -DOPTION_BUILD_DETOURS_PLTHOOK=ON
+      -DOPTION_FORK_SAFE=ON
       -DOPTION_BUILD_SCRIPTS=OFF
       -DOPTION_BUILD_TESTS=OFF
       -DOPTION_BUILD_EXAMPLES=OFF
@@ -136,6 +138,7 @@ class Metacall < Formula
       -DOPTION_BUILD_PORTS=ON
       -DOPTION_BUILD_PORTS_PY=ON
       -DOPTION_BUILD_PORTS_NODE=ON
+      -DOPTION_BUILD_PORTS_RB=ON
       -DOPTION_BUILD_PLUGINS_BACKTRACE=OFF
       -DPython3_VERSION=#{py3ver}
       -DPython3_ROOT_DIR=#{py3rootdir}
