@@ -195,8 +195,21 @@ class Metacall < Formula
     system "cmake", "--build", ".", "--target", "clean"
   end
 
-  # # NPM Post Install
   def post_install
+    # MetaCall Configuration Debug
+    config_dir = HOMEBREW_PREFIX/"configurations"
+
+    if config_dir.exist?
+      ohai "Listing configurations in #{config_dir}:"
+      config_dir.children.each do |file|
+        puts file
+        puts file.read
+      end
+    else
+      opoo "Config directory not found: #{config_dir}"
+    end
+
+    # NPM Post Install
     node_modules = HOMEBREW_PREFIX/"lib/node_modules"
     node_modules.mkpath
     # Kill npm but preserve all other modules across node updates/upgrades.
