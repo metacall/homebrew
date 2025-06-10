@@ -51,16 +51,16 @@ class Metacall < Formula
   end
 
   def install
+    # Build path
+    build_dir = buildpath/"build"
+    Dir.mkdir(build_dir)
+    Dir.chdir(build_dir)
+
     # Create a directory for the Python module
     py_module_dir = prefix/"lib/python"
     mkdir_p py_module_dir
     ENV["PIP_TARGET"] = py_module_dir.to_s
     ENV.delete("PYTHONPATH")  # Clear PYTHONPATH to avoid conflicts
-  
-    # Build path
-    build_dir = buildpath/"build"
-    Dir.mkdir(build_dir)
-    Dir.chdir(build_dir)
 
     # Set Python
     py3ver = Language::Python.major_minor_version python_executable
