@@ -7,7 +7,7 @@ class Metacall < Formula
   head "https://github.com/metacall/core.git", branch: "develop"
 
   depends_on "cmake" => :build
-  depends_on "python@3.13"
+  depends_on "python@3.12"
   depends_on "ruby@3.3"
   # TODO: Enable Java
   # depends_on "openjdk"
