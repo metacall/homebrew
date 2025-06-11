@@ -59,9 +59,8 @@ class Metacall < Formula
     # Create a directory for the Python module
     py_module_dir = prefix/"lib/python"
     mkdir_p py_module_dir
-    # ENV["PIP_TARGET"] = py_module_dir.to_s
-    # ENV.delete("PYTHONPATH")  # Clear PYTHONPATH to avoid conflicts
-    ENV.prepend_path "PIP_TARGET", py_module_dir
+    ENV["PIP_TARGET"] = py_module_dir.to_s
+    ENV.delete("PYTHONPATH") # Clear PYTHONPATH to avoid conflicts
 
     # Set Python
     py3ver = Language::Python.major_minor_version python_executable
@@ -76,10 +75,11 @@ class Metacall < Formula
     py3pip = py3prefix/"lib/python#{py3ver}/site-packages"
 
     # Add pip site packages folder to target so the build system can find it
-    # if OS.mac? && Hardware::CPU.intel?
-    #   ENV.prepend_path "PATH", py3prefix/"bin"
-    #   ENV.prepend_path "PATH", py3prefix/"libexec/bin"
-    # end
+    if OS.mac? && Hardware::CPU.intel?
+      ENV.prepend_path "PATH", py3prefix/"bin"
+      ENV.prepend_path "PATH", py3prefix/"libexec/bin"
+      ENV.prepend_path "PYTHONPATH", py3pip
+    end
   
     # Set NodeJS
     resource("node").stage do
