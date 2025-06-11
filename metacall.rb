@@ -287,6 +287,9 @@ class Metacall < Formula
     # Test node.exe
     assert_match "NodeJS Port", shell_output("#{bin}/node test-port.js")
 
+    # Add site-packages folder to PYTHONPATH so python can find the packages
+    ENV.prepend_path "PYTHONPATH", "#{HOMEBREW_PREFIX}/lib/python"
+
     # Test python.exe
     assert_match "Python Port", shell_output("#{python_executable} test-port.py")
   end
