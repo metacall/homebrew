@@ -281,8 +281,13 @@ class Metacall < Formula
     # TODO: Enable Java
     # assert_match "Hello from Java", shell_output("#{bin}/metacall test.java")
 
-    # Test node.exe and python.exe
-    assert_match "Python Port", shell_output("#{python_executable} test-port.py")
+    # Add node_modules folder to NODE_PATH so node can find the packages
+    ENV.prepend_path "NODE_PATH", "#{HOMEBREW_PREFIX}/lib/node_modules"
+
+    # Test node.exe
     assert_match "NodeJS Port", shell_output("#{bin}/node test-port.js")
+
+    # Test python.exe
+    assert_match "Python Port", shell_output("#{python_executable} test-port.py")
   end
 end
