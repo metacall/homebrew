@@ -75,6 +75,10 @@ class Metacall < Formula
     py3pip = py3prefix/"lib/python#{py3ver}/site-packages"
 
     # Add pip site packages folder to target so the build system can find it
+    if OS.mac? && Hardware::CPU.intel?
+      ENV.prepend_path "PATH", py3prefix/"bin"
+      ENV.prepend_path "PATH", py3prefix/"libexec/bin"
+    end
   
     # Set NodeJS
     resource("node").stage do
