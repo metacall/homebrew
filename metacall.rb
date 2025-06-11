@@ -7,7 +7,7 @@ class Metacall < Formula
   head "https://github.com/metacall/core.git", branch: "develop"
 
   depends_on "cmake" => :build
-  depends_on "python@3.13"
+  depends_on "python@3.12"
   depends_on "ruby@3.3"
   # TODO: Enable Java
   # depends_on "openjdk"
@@ -280,5 +280,9 @@ class Metacall < Formula
 
     # TODO: Enable Java
     # assert_match "Hello from Java", shell_output("#{bin}/metacall test.java")
+
+    # Test node.exe and python.exe
+    assert_match "NodeJS Port", shell_output("#{bin}/node test-port.js")
+    assert_match "Python Port", shell_output("#{python_executable} test-port.py")
   end
 end
