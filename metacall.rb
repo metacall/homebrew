@@ -7,7 +7,7 @@ class Metacall < Formula
   head "https://github.com/metacall/core.git", branch: "develop"
 
   depends_on "cmake" => :build
-  depends_on "python@3.12"
+  depends_on "python@3.13"
   depends_on "ruby@3.3"
   # TODO: Enable Java
   # depends_on "openjdk"
@@ -183,6 +183,9 @@ class Metacall < Formula
       "export LOADER_SCRIPT_PATH=\"\${LOADER_SCRIPT_PATH:-\`pwd\`}\"\n",
       "${PREFIX}/metacallcli $@\n"
     ]
+
+    # Add node_modules folder to NODE_PATH so node can find the packages
+    ENV.prepend_path "NODE_PATH", "#{HOMEBREW_PREFIX}/lib/node_modules"
 
     File.open("metacall.sh", "w") do |f|
       f.write(*metacall_sh)
