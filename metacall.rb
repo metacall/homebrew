@@ -129,7 +129,8 @@ class Metacall < Formula
       -DCMAKE_C_COMPILER=#{cc_compiler}
       -DCMAKE_CXX_COMPILER=#{cxx_compiler}
       -DCMAKE_INCLUDE_PATH=#{xcode_prefix}/usr/include/c++/v1
-      -DCMAKE_BUILD_TYPE=Release
+      -DCMAKE_BUILD_TYPE=Debug
+      -DOPTION_BUILD_PLUGINS_BACKTRACE=ON
       -DOPTION_BUILD_SECURITY=OFF
       -DOPTION_BUILD_DETOURS=ON
       -DOPTION_BUILD_DETOURS_PLTHOOK=ON
@@ -156,7 +157,6 @@ class Metacall < Formula
       -DOPTION_BUILD_PORTS_PY=ON
       -DOPTION_BUILD_PORTS_NODE=ON
       -DOPTION_BUILD_PORTS_RB=ON
-      -DOPTION_BUILD_PLUGINS_BACKTRACE=OFF
       -DPython3_VERSION=#{py3ver}
       -DPython3_ROOT_DIR=#{py3rootdir}
       -DPython3_EXECUTABLE=#{python_executable}
