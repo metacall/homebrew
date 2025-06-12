@@ -131,7 +131,7 @@ class Metacall < Formula
       backward_cpp_dir.install "BackwardConfig.cmake", "CMakeLists.txt", "backward.cpp", "backward.hpp"
 
       mkdir backward_cpp_dir/"build" do
-        system "cmake", "..", "-DCMAKE_INSTALL_PREFIX=#{backward_cpp_dir}"
+        system "cmake", "..", "-DCMAKE_INSTALL_PREFIX=#{backward_cpp_dir}", "-DBACKWARD_TESTS=OFF", "-DBACKWARD_SHARED=OFF"
         system "make"
         system "make", "install"
         system "ls", "-Rla", backward_cpp_dir
