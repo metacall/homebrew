@@ -131,7 +131,7 @@ class Metacall < Formula
       backward_cpp_dir.install "BackwardConfig.cmake", "CMakeLists.txt", "backward.cpp", "backward.hpp"
 
       mkdir backward_cpp_dir/"build" do
-        system "cmake", "..", "-DCMAKE_INSTALL_PREFIX=#{HOMEBREW_PREFIX}", "-DBACKWARD_TESTS=OFF", "-DBACKWARD_SHARED=OFF"
+        system "cmake", "..", "-DCMAKE_INSTALL_PREFIX=#{backward_cpp_dir}/install", "-DBACKWARD_TESTS=OFF", "-DBACKWARD_SHARED=OFF"
         system "make"
         system "make", "install"
       end
@@ -151,7 +151,7 @@ class Metacall < Formula
       -DCMAKE_INCLUDE_PATH=#{xcode_prefix}/usr/include/c++/v1
       -DCMAKE_BUILD_TYPE=RelWithDebInfo
       -DOPTION_BUILD_PLUGINS_BACKTRACE=ON
-      -DBackwardCpp_SOURCE=#{HOMEBREW_PREFIX}/lib/cmake/backward
+      -DBackwardCpp_SOURCE=#{backward_cpp_dir}/install/lib/cmake/backward
       -DOPTION_BUILD_SECURITY=OFF
       -DOPTION_BUILD_DETOURS=ON
       -DOPTION_BUILD_DETOURS_PLTHOOK=ON
