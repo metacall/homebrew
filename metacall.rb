@@ -1,8 +1,8 @@
 class Metacall < Formula
   desc "Ultimate polyglot programming experience"
   homepage "https://metacall.io"
-  url "https://github.com/metacall/core/archive/refs/tags/v0.9.7.tar.gz"
-  sha256 "d195004fb0f8f9afaccb5854849d7ac09a81b12c02b57228d0a6b1b7896ec2e5"
+  url "https://github.com/metacall/core/archive/refs/tags/v0.9.8.tar.gz"
+  sha256 "39d083282e192e8afa1d73e560ef9646bf14156d4f8bd7d39f9d4f50db78d620"
   license "Apache-2.0"
   head "https://github.com/metacall/core.git", branch: "develop"
 
@@ -38,6 +38,13 @@ class Metacall < Formula
   resource "plthook" do
     url "https://github.com/metacall/plthook/archive/refs/tags/v0.1.0.tar.gz"
     sha256 "1e09d262b7db65021510a308d1554b9d2420e9dcd15e47ffdebff5157a9723d8"
+  end
+
+  # Define BackwardCpp resource
+  resource "backward-cpp" do
+    url "https://github.com/metacall/backward-cpp.git",
+        :using => :git,
+        :revision => "0bfd0a07a61551413ccd2ab9a9099af3bad40681"
   end
 
   def python
@@ -117,6 +124,13 @@ class Metacall < Formula
       plthook_dir.install "plthook.h", "plthook_osx.c"
     end
 
+    # BackwardCpp
+    backward_cpp_dir = buildpath/"build/backward-cpp"
+
+    resource("backward-cpp").stage do
+      backward_cpp_dir.install "BackwardConfig.cmake", "CMakeLists.txt", "backward.cpp", "backward.hpp"
+    end
+
     # Set the compiler
     cc_compiler = `xcrun --find clang`.tr("\n","")
     cxx_compiler = `xcrun --find clang++`.tr("\n","")
@@ -129,8 +143,9 @@ class Metacall < Formula
       -DCMAKE_C_COMPILER=#{cc_compiler}
       -DCMAKE_CXX_COMPILER=#{cxx_compiler}
       -DCMAKE_INCLUDE_PATH=#{xcode_prefix}/usr/include/c++/v1
-      -DCMAKE_BUILD_TYPE=Debug
+      -DCMAKE_BUILD_TYPE=RelWithDebInfo
       -DOPTION_BUILD_PLUGINS_BACKTRACE=ON
+      -DBackwardCpp_SOURCE=#{backward_cpp_dir}
       -DOPTION_BUILD_SECURITY=OFF
       -DOPTION_BUILD_DETOURS=ON
       -DOPTION_BUILD_DETOURS_PLTHOOK=ON
