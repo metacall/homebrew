@@ -130,12 +130,16 @@ class Metacall < Formula
     resource("backward-cpp").stage do
       backward_cpp_dir.install "BackwardConfig.cmake", "CMakeLists.txt", "backward.cpp", "backward.hpp"
 
-      mkdir backward_cpp_dir/"build" do
+      backward_cpp_build_dir = backward_cpp_dir/"build"
+
+      mkdir backward_cpp_build_dir do
         system "cmake", "..", "-DCMAKE_INSTALL_PREFIX=#{backward_cpp_dir}", "-DBACKWARD_TESTS=OFF", "-DBACKWARD_SHARED=OFF"
         system "make"
         system "make", "install"
-        system "ls", "-Rla", backward_cpp_dir
       end
+
+      cp backward_cpp_build_dir/"lib/cmake/backward/BackwardTargets.cmake", backward_cpp_dir
+      rm_rf backward_cpp_build_dir
     end
 
     # Set the compiler
