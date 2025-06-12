@@ -133,7 +133,7 @@ class Metacall < Formula
       backward_cpp_build_dir = backward_cpp_dir/"build"
 
       mkdir backward_cpp_build_dir do
-        system "cmake", "..", "-DCMAKE_INSTALL_PREFIX=#{backward_cpp_dir}", "-DBACKWARD_TESTS=OFF", "-DBACKWARD_SHARED=OFF"
+        system "cmake", "..", "-DCMAKE_INSTALL_PREFIX=#{backward_cpp_build_dir}", "-DBACKWARD_TESTS=OFF", "-DBACKWARD_SHARED=OFF"
         system "make"
         system "make", "install"
       end
