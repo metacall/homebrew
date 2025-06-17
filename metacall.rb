@@ -1,8 +1,8 @@
 class Metacall < Formula
   desc "Ultimate polyglot programming experience"
   homepage "https://metacall.io"
-  url "https://github.com/metacall/core/archive/refs/tags/v0.9.8.tar.gz"
-  sha256 "39d083282e192e8afa1d73e560ef9646bf14156d4f8bd7d39f9d4f50db78d620"
+  url "https://github.com/metacall/core/archive/refs/tags/v0.9.9.tar.gz"
+  sha256 "8e269caf2f0177aa124f08f21e6c00922e8b265c8dcfe1513e2be2d6b127c6fc"
   license "Apache-2.0"
   head "https://github.com/metacall/core.git", branch: "develop"
 
@@ -314,14 +314,13 @@ class Metacall < Formula
       assert_match "NodeJS Port", shell_output("#{bin}/node test-port.js")
     end
 
-    # TODO: Review this, it is failing without any output
-    # # Test Python executable
-    # begin
-    #   # Add site-packages folder to PYTHONPATH so python can find the packages
-    #   ENV.prepend_path "PYTHONPATH", "#{HOMEBREW_PREFIX}/lib/python"
+    # Test Python executable
+    begin
+      # Add site-packages folder to PYTHONPATH so python can find the packages
+      ENV.prepend_path "PYTHONPATH", "#{HOMEBREW_PREFIX}/lib/python"
 
-    #   # Test python port
-    #   assert_match "Python Port", shell_output("#{python_executable} test-port.py")
-    # end
+      # Test python port
+      assert_match "Python Port", shell_output("#{python_executable} test-port.py")
+    end
   end
 end
