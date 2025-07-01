@@ -1,12 +1,12 @@
 name: Build and Test Homebrew MetaCall
 
 on:
+  pull_request:
   push:
     branches:
       - main
     tags:
       - "v*.*.*"
-  pull_request:
   workflow_dispatch:
     # TODO: Implement support to automatically update the version of
     # metacall/core when there is a tag on that repo that triggers this one
