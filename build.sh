@@ -9,4 +9,6 @@ fi
 
 # Build metacall brew recipe
 export HOMEBREW_NO_AUTO_UPDATE=1
-brew install --formula ./metacall.rb --build-from-source --overwrite --verbose
+brew tap-new metacall/core
+mv ./metacall.rb $(brew --repository)/Library/Taps/metacall/core/Formula/metacall.rb
+brew install --formula metacall/core/metacall --overwrite --verbose
