@@ -26,7 +26,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-13, macos-14, macos-15]
+        os: [macos-14, macos-15-intel, macos-15]
+        mode: [debug, release]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Check out the repository
@@ -88,7 +89,7 @@ jobs:
 
       # Build Homebrew recipe
       - name: Build
-        run:  ./build.sh
+        run: ./build.sh ${{ matrix.mode }}
 
       # Test Homebrew recipe
       - name: Test
