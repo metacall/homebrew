@@ -7,14 +7,22 @@ if [[ $(command -v brew) == "" ]]; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
+# Select the build type
 if [ "${1:-}" == "debug" ]; then
     echo "Build Mode: Debug"
 
     # Replace the build type by debug
-    sed -i '' '/-DCMAKE_BUILD_TYPE=/c\      -DCMAKE_BUILD_TYPE=Debug' metacall.rb
+    sed -i '' '/-DCMAKE_BUILD_TYPE=/c\
+      -DCMAKE_BUILD_TYPE=Debug
+' metacall.rb
 
     # TODO: Add support for preloading address sanitizer in executables using MetaCall
-    # sed -i '/-DCMAKE_BUILD_TYPE=Debug/ a\      -DOPTION_BUILD_ADDRESS_SANITIZER=ON' metacall.rb
+#     sed -i '' '/-DCMAKE_BUILD_TYPE=Debug/a\
+#       -DOPTION_BUILD_ADDRESS_SANITIZER=ON
+# ' metacall.rb
+
+    # Debug print the recipe
+    cat metacall.rb
 
 elif [ "${1:-}" == "release" ] || [ -z "${1:-}" ]; then
     echo "Build Mode: Release"
