@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
-brew test metacall/core/metacall
+brew test --verbose metacall/core/metacall
