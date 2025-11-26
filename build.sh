@@ -21,6 +21,9 @@ if [ "${1:-}" == "debug" ]; then
 #       -DOPTION_BUILD_ADDRESS_SANITIZER=ON
 # ' metacall.rb
 
+    # Replace the CLI name
+    sed -i '' 's/metacallcli/metacallclid/g' metacall.rb
+
     # Debug print the recipe
     cat metacall.rb
 
