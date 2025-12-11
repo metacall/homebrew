@@ -150,6 +150,7 @@ class Metacall < Formula
       -DCMAKE_CXX_COMPILER=#{cxx_compiler}
       -DCMAKE_INCLUDE_PATH=#{xcode_prefix}/usr/include/c++/v1
       -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      -DSYSTEM_DIR_INSTALL=ON
       -DOPTION_BUILD_PLUGINS_BACKTRACE=ON
       -DBackwardCpp_SOURCE=#{backward_cpp_dir}/install/lib/cmake/backward
       -DOPTION_BUILD_SECURITY=OFF
